@@ -1,0 +1,20 @@
+name: vm3-headfresh-guard-workflow
+on:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  guard:
+    name: vm3-headfresh-guard
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hold synthetic carrier, pass sources
+        env:
+          HEAD_REF: ${{ github.head_ref }}
+        run: |
+          echo "head_ref=$HEAD_REF"
+          if [[ "$HEAD_REF" == mergify/merge-queue/* ]]; then
+            echo "synthetic hold begins"
+            sleep 35
+          fi
+          echo "guard success"

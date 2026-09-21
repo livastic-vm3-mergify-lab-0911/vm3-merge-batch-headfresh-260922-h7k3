@@ -1,0 +1,12 @@
+queue_rules:
+  - name: vm3-headfresh-batch
+    queue_conditions:
+      - check-success = vm3-headfresh-guard
+    merge_conditions:
+      - check-success = vm3-headfresh-guard
+    batch_size: 2
+    batch_max_wait_time: 5s
+    merge_method: merge-batch
+merge_queue:
+  mode: serial
+  max_parallel_checks: 1
